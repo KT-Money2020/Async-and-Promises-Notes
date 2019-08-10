@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asynchronous JavaScript</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <script>
+/*
+        function getRecipe(){
+            setTimeout(()=>{
+                const recipeID = [523, 883, 432, 974];
+                console.log(recipeID);
+                
+                setTimeout(id=>{
+                    const recipe = {title:'Fresh tomato pasta', publisher:'Jonas'};
+                    console.log(`${id}: ${recipe.title}`);
+                    
+                    setTimeout(publisher =>{
+                        const recipe = {title: 'Italian Pizza', publisher: 'Jonas'}
+                        
+                         console.log(recipe);
+                    },1500, recipe.publisher);
+                }, 1500, recipeID[2]);
+                
+            },1500);
+        }
+        getRecipe();
+        */
+        
+        const getIDs = new Promise((resolve, reject)=>{
+            setTimeout(()=>{
+                //Since it is always going to get resolved this unnamed array is first going to get passed into the 'IDS' parameter and then gets printed. No variables or anything just the unnamed array
+                resolve([523, 883, 432, 974]);
+            });
+        },1500);
+        
+        //Passes in the number from index 2 of 'IDs'
+        const getRecipe = (recID) =>{
+            return new Promise((resolve, reject) => {
+                //Receives the argument and set it the 'ID'
+                setTimeout(ID =>{
+                   const recipe = {title: 'Fresh tomato pasta', publisher:'Jonas'};
+                   //Resolve returns the anything you want to return inside it. You can return a string like below or you could also return an object
+                    resolve(`${ID}: ${recipe.title}`);
+                },1500, recID);
+                //receives the argument passed in from the top
+        });
+        };
+        
+        const getRelated = (publisher) => {
+            return new Promise((resolve, reject) =>{
+               setTimeout(pub =>{
+                   const recipe = {title: 'Italian Pizza', publisher:'Jonas'};
+                   //Resolve returns the anything you want to return inside it. You can return a string like below or you could also return an object
+                   resolve(`${pub}: ${recipe.title}`);
+               },1500,publisher); 
+            });
+        };
+        /*
+        getIDs
+        .then((IDs) => {
+            //Prints out the unnamed array
+            console.log(IDs);
+            //Selects the index of 2 from the new IDs array (432) and returns the string '432: Fresh tomato pasta'
+            return getRecipe(IDs[2]);
+        })
+        //This 'recipe' parameter is completely different from the  variable from within the 'getRecipe' think about closures
+        //This next 'then' handles the previous 'resolved' promise data returned, thats why it is chained
+        //now that it has a hold of the returned data, that data will  be passed into the parameter 'recipe' to be printed out
+        .then(recipe => {
+            console.log(recipe);
+            //Passes in the string 'Jonas' and get in return, 'Jonas: Italian Pizza'
+            return getRelated('Jonas');
+        })
+        //Uses the previously return value and prints it out
+        .then((recipe) =>{
+            console.log(recipe);
+        })
+        .catch((error)=>{
+            console.log(error);
+        });
+            
+            */
+        
+        
+        async function getRecipesAW(){
+            const IDs = await getIDs;
+            console.log(IDs);
+            const recipe = await getRecipe(IDs[2]);
+            console.log(recipe);
+            const related = await getRelated('Jonas');
+            console.log(related);
+        }
+        getRecipesAW();
+        
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
