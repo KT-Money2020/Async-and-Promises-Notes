@@ -61,6 +61,7 @@
             });
         };
         /*
+        
         getIDs
         .then((IDs) => {
             //Prints out the unnamed array
@@ -95,7 +96,14 @@
             const related = await getRelated('Jonas');
             console.log(related);
         }
-        getRecipesAW();
+        /*
+        //Rather than using this syntax you would want to use the trick below this one because this one executes too slow to catch up and actually print out the returned recipe value
+        const rec = getRecipesAWAW();
+        console.log(rec);
+        */
+        
+        //Prints out the values from 'getRecipesAW()' first, then pass in the returned value from that function and print it out at the same time
+        getRecipesAW().then(result => console.log(`${result} is the best ever!`));
         
     </script>
 </body>
