@@ -31,6 +31,7 @@
         getRecipe();
         */
         
+        /*
         const getIDs = new Promise((resolve, reject)=>{
             setTimeout(()=>{
                 //Since it is always going to get resolved this unnamed array is first going to get passed into the 'IDS' parameter and then gets printed. No variables or anything just the unnamed array
@@ -60,6 +61,7 @@
                },1500,publisher); 
             });
         };
+        */
         /*
         
         getIDs
@@ -87,7 +89,7 @@
             
             */
         
-        
+        /*
         async function getRecipesAW(){
             const IDs = await getIDs;
             console.log(IDs);
@@ -95,7 +97,10 @@
             console.log(recipe);
             const related = await getRelated('Jonas');
             console.log(related);
+            
+            return recipe;
         }
+        */
         /*
         //Rather than using this syntax you would want to use the trick below this one because this one executes too slow to catch up and actually print out the returned recipe value
         const rec = getRecipesAWAW();
@@ -103,8 +108,28 @@
         */
         
         //Prints out the values from 'getRecipesAW()' first, then pass in the returned value from that function and print it out at the same time
+        /*
         getRecipesAW().then(result => console.log(`${result} is the best ever!`));
-        
+        */
+        function getWeather(woeid){
+            fetch(`http://cors-anywhere.herokuapp.com/https://www.metaweather.com/api/location/${woeid}/`)
+            //Data that comes back from the fetch will now be called the variable 'result'
+            .then(result => {
+                //Just printing out the strings rather than object
+                console.log(result);
+                //To convert the aquired object you would call upon the Json method
+                return result.json();
+            })
+            .then(data => {
+                //console.log(data);
+                const today = data.consolidated_weather[0];
+                console.log(`Temperatures in ${data.title} stay between ${today.min_temp} and ${today.max_temp}`);
+            })
+            .catch(error => console.log(error));
+        }
+        //Entering different ID to call different API items
+        getWeather(2487956);
+        getWeather(44418);
     </script>
 </body>
 </html>
